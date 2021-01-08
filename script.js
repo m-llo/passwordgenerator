@@ -4,8 +4,7 @@
 //Take the value entered and generate a password using math.random() from the options, use conditions if each option chosen
 //need object with 4 properties for each password options
 
-// Assignment Code
-var generateBtn = document.querySelector("#generate");
+
 
 // password options object
 var characterOps = {
@@ -20,126 +19,298 @@ var characterOps = {
   number : true,
   special : true,
 
-  noUpper: function() {
-    alert("Your password will contain lowercase letters, numbers, and special characters");
-  },
-  noLower: function (){ alert("Your password will contain uppercase letters, numbers, and special characters")
-  },
-  noNumber: function (){ alert("Your password will contain uppercase letters, lowercase letters, and special characters")
-  },
-  noSpecial: function (){ alert("Your password will contain uppercase letters, lowercase letters, and numbers")
-  },
-  noUpperNoLower: function(){ alert("Your password will contain numbers, and special characters")
-  },
-  noUpperNoNumber: function (){ alert("Your password will contain lowercase letters, and special characters")
-  },
-  noUpperNoSpecial: function (){ alert("Your password will contain lowercase letters, and numbers")
-  },
-  noLowerNoNumber: function (){ alert("Your password will contain uppercase letters and special characters")
-  },
-  noLowerNoSpecial: function () { alert("Your password will contain uppercase letters, and numbers")
-  },
- noNumberNoSpecial : function (){ alert("Your password will contain uppercase letters, and lowercase letters")
-  },
+
+    all : false,
+    noUp: false,
+    noLow: false,
+    noNum: false,
+    noSpec: false,
+    upperLower: false,
+    upperNumber: false,
+    upperSpecial: false,
+    lowerNumber: false,
+    lowerSpecial: false,
+    numberSpecial: false,
+    upOnly: false,
+    lowOnly: false,
+    numOnly: false,
+    specOnly: false,
+}
+
+var userSel = prompt("How many characters would you like your password to be? (Please enter a number from 8-128)")
+
+
+var confirmOptions = {
+    allIn: function () {
+      alert("Your password will contain " + userSel + " uppercase letters, lowercase letters, numbers, and special characters.");
+    },
+    noUpper: function() {
+      alert("Your password will contain " + userSel + "  lowercase letters, numbers, and special characters");
+    },
+    noLower: function (){ alert("Your password will contain " + userSel + "  uppercase letters, numbers, and special characters")
+    },
+    noNumber: function (){ alert("Your password will contain " + userSel + "  uppercase letters, lowercase letters, and special characters")
+    },
+    noSpecial: function (){ alert("Your password will contain " + userSel + "  uppercase letters, lowercase letters, and numbers")
+    },
+    noUpperNoLower: function(){ alert("Your password will contain " + userSel + "  numbers, and special characters")
+    },
+    noUpperNoNumber: function (){ alert("Your password will contain " + userSel + "  lowercase letters, and special characters")
+    },
+    noUpperNoSpecial: function (){ alert("Your password will contain " + userSel + "  lowercase letters, and numbers")
+    },
+    noLowerNoNumber: function (){ alert("Your password will contain " + userSel + "  uppercase letters and special characters")
+    },
+    noLowerNoSpecial: function () { alert("Your password will contain " + userSel + "  uppercase letters, and numbers")
+    },
+    noNumberNoSpecial : function (){ alert("Your password will contain " + userSel + "  uppercase letters, and lowercase letters")
+    },
+    upperOnly: function () { alert("Your password will contain " + userSel + " uppercase letters")
+    },
+    lowerOnly: function () { alert("Your password will contain " + userSel + "  lowercase letters")
+    },
+    numberOnly: function () { alert("Your password will contain " + userSel + " numbers")
+    },
+    specialOnly: function () { alert("Your password will contain " + userSel + " special characters")
+    },
+  }
   
-  // userSel : function (){ prompt("How many characters would you like your password to be? (Please enter a number from 8-128)")
-// },
 
-// var userSel; ask how to reference this variable for the loop
+  
 
-// while (userSel()  !== null) {
-  passwordLength : function() {
-    var userSel = prompt("How many characters would you like your password to be? (Please enter a number from 8-128)")
-    if (userSel <=7 || userSel >=129){ 
+function passwordOptions() {
+    userSel;
+
+  if (userSel <=7 || userSel >=129){ 
       alert("Password length must be between 8-128 characters, try again!")
     }
     else {
-      alert("Please choose the character types to be included in your password (minimum two types)")
+      alert("Please choose the character types to be included in your password (minimum one character type)")
       var confirmUpper = confirm("Will your password contain uppercase letters?")
       if (confirmUpper === false) {
-        this.upper = false
+        characterOps.upper = false
       }
       var confirmlower = confirm("Will your password contain lowercase letters?")
       if (confirmlower === false) {
-        this.lower = false
+        characterOps.lower = false
       }
       var confirmNum = confirm("Will your password contain numbers?")
       if (confirmNum === false) {
-        this.number = false
+        characterOps.number = false
       }
       var confirmSpec = confirm("Will your password contain special characters?")
       if (confirmSpec === false) {
-        this.special = false
+        characterOps.special = false
       }
+      if (characterOps.upper === true && characterOps.lower === true && characterOps.number === true && characterOps.special === true) {
+        confirmOptions.allIn();
+        characterOps.all = true
+       }
+      else if (characterOps.upper !== true && characterOps.lower === true && characterOps.number === true && characterOps.special === true) {
+      confirmOptions.noUpper();
+      characterOps.noUp = true
+       }
+     else if (characterOps.upper !== true && characterOps.lower !== true && characterOps.number === true && characterOps.special === true) {
+      confirmOptions.noUpperNoLower();
+      characterOps.numberSpecial = true
+       }
+     else if (characterOps.upper !== true && characterOps.lower === true && characterOps.number !== true && characterOps.special === true) {
+      confirmOptions.noUpperNoNumber();
+      characterOps.lowerSpecial = true
+      }
+     else if (characterOps.upper !== true && characterOps.lower === true && characterOps.number === true && characterOps.special !== true) {
+      confirmOptions.noUpperNoSpecial();
+      characterOps.lowerNumber = true
+       }
+     else if (characterOps.upper === true && characterOps.lower !== true && characterOps.number === true && characterOps.special === true) {
+      confirmOptions.noLower();
+      characterOps.noLow = true
+     }
+     else if (characterOps.upper === true && characterOps.lower !== true && characterOps.number !== true && characterOps.special === true) {
+      confirmOptions.noLowerNoNumber();
+      characterOps.upperSpecial = true
+      }
+     else if (characterOps.upper === true && characterOps.lower !== true && characterOps.number === true && characterOps.special !== true) {
+      confirmOptions.noLowerNoSpecial();
+      characterOps.upperNumber = true
+     }
+     else if (characterOps.upper === true && characterOps.lower === true && characterOps.number !== true && characterOps.special !== true) {
+      confirmOptions.noNumber();
+      characterOps.noNum = true
+     }
+      else if (characterOps.upper === true && characterOps.lower === true && characterOps.number !== true && characterOps.special !== true) {
+      confirmOptions.noNumberNoSpecial();
+      characterOps.upperLower = true
+      }
+      else if (characterOps.upper === true && characterOps.lower === true && characterOps.number === true && characterOps.special !== true) {
+      confirmOptions.noSpecial();
+      characterOps.noSpec = true
+     }
+     else if (characterOps.upper === true && characterOps.lower !== true && characterOps.number !== true && characterOps.special !== true) {
+      confirmOptions.upperOnly();
+      characterOps.upOnly = true
+     }
+     else if (characterOps.upper !== true && characterOps.lower === true && characterOps.number !== true && characterOps.special !== true) {
+      confirmOptions.lowerOnly();
+      characterOps.lowOnly = true
+      }
+      else if (characterOps.upper !== true && characterOps.lower !== true && characterOps.number === true && characterOps.special !== true) {
+      confirmOptions.numberOnly();
+      characterOps.numOnly = true
+      }
+      else if (characterOps.upper !== true && characterOps.lower !== true && characterOps.number !== true && characterOps.special === true) {
+      confirmOptions.specialOnly();
+      characterOps.specOnly = true
+     }
+     else {
+      alert("Your password must contain at least one of the following: uppercase letters, lowercase letters, numbers, and special characters!")
+       }  
+   }
+  }
+ 
+// password options
+   var allCharacters = ( 
+    characterOps.upperCase[Math.floor(Math.random()*characterOps.upperCase.length)] +
+    characterOps.lowerCase[Math.floor(Math.random()*characterOps.lowerCase.length)] +
+    characterOps.numbers[Math.floor(Math.random()*characterOps.numbers.length)] +
+    characterOps.specialCase[Math.floor(Math.random()*characterOps.specialCase.length)]
+   );
+   var noUpper = (
+    characterOps.lowerCase[Math.floor(Math.random()*characterOps.lowerCase.length)] +
+    characterOps.numbers[Math.floor(Math.random()*characterOps.numbers.length)] +
+    characterOps.specialCase[Math.floor(Math.random()*characterOps.specialCase.length)]
+   );
+   var noLower = (
+    characterOps.upperCase[Math.floor(Math.random()*characterOps.upperCase.length)] +
+    characterOps.numbers[Math.floor(Math.random()*characterOps.numbers.length)] +
+    characterOps.specialCase[Math.floor(Math.random()*characterOps.specialCase.length)]
+   );
+   var noNumbers = (
+    characterOps.upperCase[Math.floor(Math.random()*characterOps.upperCase.length)] +
+    characterOps.lowerCase[Math.floor(Math.random()*characterOps.lowerCase.length)] +
+    characterOps.specialCase[Math.floor(Math.random()*characterOps.specialCase.length)]
+   );
+   var noSpecial = (
+    characterOps.upperCase[Math.floor(Math.random()*characterOps.upperCase.length)] +
+    characterOps.lowerCase[Math.floor(Math.random()*characterOps.lowerCase.length)] +
+    characterOps.numbers[Math.floor(Math.random()*characterOps.numbers.length)] 
+    );
+   var upperLower = (
+    characterOps.upperCase[Math.floor(Math.random()*characterOps.upperCase.length)] +
+    characterOps.lowerCase[Math.floor(Math.random()*characterOps.lowerCase.length)] 
+   );
+   var upperNumber = (
+    characterOps.upperCase[Math.floor(Math.random()*characterOps.upperCase.length)] +
+    characterOps.numbers[Math.floor(Math.random()*characterOps.numbers.length)]
+    );
+   var upperSpecial = (
+    characterOps.upperCase[Math.floor(Math.random()*characterOps.upperCase.length)] +
+    characterOps.specialCase[Math.floor(Math.random()*characterOps.specialCase.length)]
+   );
+   var lowerNumber = (
+    characterOps.lowerCase[Math.floor(Math.random()*characterOps.lowerCase.length)] +
+    characterOps.numbers[Math.floor(Math.random()*characterOps.numbers.length)]
+   );
+   var lowerSpecial = (
+    characterOps.lowerCase[Math.floor(Math.random()*characterOps.lowerCase.length)] +
+    characterOps.specialCase[Math.floor(Math.random()*characterOps.specialCase.length)]
+   );
+   var numberSpecial = (
+    characterOps.numbers[Math.floor(Math.random()*characterOps.numbers.length)] +
+    characterOps.specialCase[Math.floor(Math.random()*characterOps.specialCase.length)]
+   );
+   var upperOnly = (
+    characterOps.upperCase[Math.floor(Math.random()*characterOps.upperCase.length)]
+   );
+   var lowerOnly = (
+    characterOps.lowerCase[Math.floor(Math.random()*characterOps.lowerCase.length)]
+   );
+   var numberOnly = (
+    characterOps.numbers[Math.floor(Math.random()*characterOps.numbers.length)]
+   );
+   var specialOnly = (
+    characterOps.specialCase[Math.floor(Math.random()*characterOps.specialCase.length)]
+   );
+  
+function generatePassword () {
+   for (i = 0; i = userSel; i++){
+    if (characterOps.all = true) {
+      allCharacters
+    };
+    if (characterOps.noUp = true) {
+      noUpper
+    };
+    if (characterOps.noLow = true) {
+      noLower
+    };
+    if (characterOps.noNum = true) {
+      noNumbers
+    };
+    if (characterOps.noSpec = true) {
+      noSpecial
+    };
+    if (characterOps.upperLower = true) {
+      upperLower
+    };
+    if (characterOps.upperNumber = true) {
+      upperNumber
+    };
+    if (characterOps.upperSpecial = true) {
+      upperSpecial
+    };
+    if (characterOps.lowerNumber = true) {
+      lowerNumber
+    };
+    if (characterOps.lowerSpecial = true) {
+      lowerSpecial
+    };
+    if (characterOps.numberSpecial = true) {
+      numberSpecial
+    };
+    if (characterOps.upOnly = true) {
+      upperOnly
+    };
+    if (characterOps.lowOnly = true) {
+      lowerOnly
+    };
+    if (characterOps.numOnly = true) {
+      numberOnly
+    };
+    if (characterOps.specOnly = true) {
+      specialOnly
+    };
+  }
+}
+
+console.log(userSel);
+ passwordOptions();
+console.log(generatePassword);
+
+ 
+ 
+  //  function allCharacters() { for (i = 0; i <=userSel; i++){
+  //   characterOps.upperCase[Math.floor(Math.random()*characterOps.upperCase.length)] +
+  //   characterOps.lowerCase[Math.floor(Math.random()*characterOps.lowerCase.length)] +
+  //   characterOps.numbers[Math.floor(Math.random()*characterOps.numbers.length)] +
+  //   characterOps.specialCase[Math.floor(Math.random()*characterOps.specialCase.length)] } }
     
-    if (this.upper === true && this.lower === true && this.number === true && this.special === true) {
-      alert("Your password will contain uppercase letters, lowercase letters, numbers, and special characters")
-    }
-    else if (this.upper !== true && this.lower === true && this.number === true && this.special === true) {
-      this.noUpper();
-    }
-    else if (this.upper !== true && this.lower !== true && this.number === true && this.special === true) {
-      this.noUpperNoLower();
-    }
-    else if (this.upper !== true && this.lower === true && this.number !== true && this.special === true) {
-      this.noUpperNoNumber();
-    }
-    else if (this.upper !== true && this.lower === true && this.number === true && this.special !== true) {
-      this.noUpperNoSpecial();
-    }
-    else if (this.upper === true && this.lower !== true && this.number === true && this.special === true) {
-      this.noLower();
-    }
-    else if (this.upper === true && this.lower !== true && this.number !== true && this.special === true) {
-      this.noLowerNoNumber();
-    }
-    else if (this.upper === true && this.lower !== true && this.number === true && this.special !== true) {
-      this.noLowerNoSpecial();
-    }
-    else if (this.upper === true && this.lower === true && this.number !== true && this.special !== true) {
-      this.noNumber();
-    }
-    else if (this.upper === true && this.lower === true && this.number !== true && this.special !== true) {
-      this.noNumberNoSpecial();
-    }
-    else if (this.upper === true && this.lower === true && this.number === true && this.special !== true) {
-      this.noSpecial();
-    }
-      
-  }
-
-  }
-}
-
-}
-console.log(characterOps.upperCase)
-console.log(characterOps.lowerCase)
-console.log(characterOps.upper)
-console.log(characterOps.lower)
-console.log(characterOps.number)
-console.log(characterOps.special)
-
-characterOps.passwordLength ();
-console.log(characterOps.upper)
-console.log(characterOps.lower)
-console.log(characterOps.number)
-console.log(characterOps.special)
+    
+// console.log(allCharacters)
 
 
-
-
-
-
-
+// Assignment Code
+var generateBtn = document.querySelector("#generate");
+// Add event listener to generate button
+generateBtn.addEventListener("click", writePassword);
+ 
 
 // Write password to the #password input - last thing to do
+
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
-
   passwordText.value = password;
 
-}
+  }
 
-// Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
+
